@@ -1,6 +1,27 @@
-def convert_to_celsius(fahrenheit):
-    celsius = (fahrenheit - 32) * 5/9
-    return celsius
-temperature_fahrenheit = 32  # Replace this with the Fahrenheit temperature you want to convert
-temperature_celsius = convert_to_celsius(temperature_fahrenheit)
-print(f"{temperature_fahrenheit} Fahrenheit is {temperature_celsius:.2f} Celsius")
+def pow(a, b):
+   
+    if b == 0:
+        return 1
+    
+   
+    if b == 1:
+        return a
+    
+    
+    if b < 0:
+        a = 1 / a
+        b = -b
+
+    result = 1
+    while b > 0:
+       
+        if b % 2 == 1:
+            result *= a
+        
+        a *= a
+        b //= 2
+
+    return result
+
+result = pow(2, 3)
+print(result)  
