@@ -1,13 +1,9 @@
 def pow(a, b):
-   
+    # Base case: when exponent is 0, result is 1
     if b == 0:
         return 1
     
-   
-    if b == 1:
-        return a
-    
-    
+    # If exponent is negative, compute reciprocal
     if b < 0:
         a = 1 / a
         b = -b
@@ -17,11 +13,14 @@ def pow(a, b):
        
         if b % 2 == 1:
             result *= a
-        
+       
         a *= a
         b //= 2
 
     return result
 
-result = pow(2, 3)
-print(result)  
+print(pow(2, 2))     
+print(pow(98, 2))    
+print(pow(98, 0))    
+print(pow(100, -2))  
+print(pow(-4, 5))     
