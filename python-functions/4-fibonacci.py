@@ -12,7 +12,7 @@ def fibonacci_sequence(n):
 
     return sequence[:n]  # Return the first n numbers of the sequence
 
-# Example usage:
+
 n = 10
 result = fibonacci_sequence(n)
 print(result)
