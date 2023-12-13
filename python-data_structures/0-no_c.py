@@ -1,6 +1,8 @@
 def no_c(my_string):
-    remove = ""
+    arr = []
     for i in my_string:
-        if i != 'c' and i != 'C':
-            remove += i
-    return (remove)
+        if i == "c" or i == "C":
+            arr.append('')
+        else:
+            arr.append(i)
+    return "".join(arr)
