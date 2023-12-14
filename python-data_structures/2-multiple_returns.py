@@ -8,6 +8,6 @@ def multiple_returns(sentence):
     return (length, first_char)
 
 # Example usage:
-sentence = "At Holberton school, I learnt C!"
+sentence = "Holberton"
 length, first = multiple_returns(sentence)
 print("Length: {:d} - First character: {}".format(length, first))
