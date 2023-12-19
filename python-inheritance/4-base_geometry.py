@@ -1,4 +1,7 @@
 #4-base_geometry.py
+"""   
+Improve Geometry geometry.
+"""
 class BaseGeometry:
     """
     A class representing the base geometry.
