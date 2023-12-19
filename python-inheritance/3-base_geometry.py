@@ -5,10 +5,13 @@ class BaseGeometry:
     """
     An empty class representing the base geometry.
     """
-    pass
-
-# Example usage:
 if __name__ == "__main__":
     # Create an instance of the BaseGeometry class
-    geometry_instance = BaseGeometry()
+    bg = BaseGeometry()
+
+    # Print the instance and its attributes using dir()
+    print(bg)
+    print(dir(bg))
+    print(dir(BaseGeometry))
+
 
