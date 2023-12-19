@@ -23,4 +23,3 @@ if __name__ == "__main__":
         print(bg.area())
     except Exception as e:
         print("[{}] {}".format(e.__class__.__name__, e))
-
