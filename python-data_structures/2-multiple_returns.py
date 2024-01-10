@@ -1,13 +1,14 @@
-def multiple_returns(sentence):
-    # Check if the sentence is empty
-    if not sentence:
-        return (0, None)  # Return a tuple with length 0 and first character as None
-    
-    length = len(sentence)
-    first_char = sentence[0]  # Get the first character of the sentence
-    return (length, first_char)
+# def multiple_returns(sentence):
+#     length = len(sentence)
+#     if length == 0:
+#         first = None
+#     else:
+#         first = sentence[0]
+#     return "Length: {:d} - First character: {}".format(length, first)
 
-# Example usage:
-sentence = "Holberton"
-length, first = multiple_returns(sentence)
-print("Length: {:d} - First character: {}".format(length, first))
+
+def multiple_returns(sentence):
+    if sentence == "":
+        return 0, None
+    else:
+        return len(sentence), sentence[0]
