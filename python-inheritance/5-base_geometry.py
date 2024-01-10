@@ -3,54 +3,42 @@ Defines a base geometry class BaseGeometry.
 """
 class BaseGeometry:
     """
-    A class representing the base geometry.
-    """
+    A class defined
 
+    -------
+
+    def area(self): --> methods to return exception
+
+    Raise:
+    Exception with meassage
+    """
+    def __dir__(self):
+        """
+        define the function:
+
+    parameters-->
+    self -> no parameters
+        """
+        attributes = super().__dir__()
+        new_attribute_list = [x for x in attributes if x != "__init_subclass__"]
+        return new_attribute_list
+    
     def area(self):
         """
-        Public instance method that raises an Exception with the message "area() is not implemented".
+        Function to raise exception
         """
         raise Exception("area() is not implemented")
-
+    
     def integer_validator(self, name, value):
         """
-        Public instance method that validates the value.
-
-        Parameters:
-        - name: str
-            The name of the value.
-        - value: int
-            The value to validate.
-
-        Raises:
-        - TypeError: If value is not an integer.
-        - ValueError: If value is less than or equal to 0.
+        Public instance method: def integer_validator(self, name, value): that validates value:
+you can assume name is always a string
+if value is not an integer: raise a TypeError exception, with the message <name> must be an integer
+if value is less or equal to 0: raise a
+ValueError exception with the message <name> must be greater than 0
         """
         if not isinstance(value, int):
-            raise TypeError("{} must be an integer".format(name))
+            raise TypeError('{} must be an integer'.format(name))
+
         if value <= 0:
-            raise ValueError("{} must be greater than 0".format(name))
-
-# Example usage:
-if __name__ == "__main__":
-    # Create an instance of the BaseGeometry class
-    bg = BaseGeometry()
-
-    # Test the integer_validator method
-    bg.integer_validator("my_int", 12)
-    bg.integer_validator("width", 89)
-
-    try:
-        bg.integer_validator("name", "John")
-    except Exception as e:
-        print("[{}] {}".format(e.__class__.__name__, e))
-
-    try:
-        bg.integer_validator("age", 0)
-    except Exception as e:
-        print("[{}] {}".format(e.__class__.__name__, e))
-
-    try:
-        bg.integer_validator("distance", -4)
-    except Exception as e:
-        print("[{}] {}".format(e.__class__.__name__, e))
+            raise ValueError('{} must be greater than 0'.format(name))
