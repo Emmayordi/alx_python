@@ -1,84 +1,77 @@
+"""Improve Geometry
+
+--------
+
+This script requirea  Python
+environment install where you are running this script in.
+
+write an empty class
+
 """
-Defines a class Rectangle that inherits from BaseGeometry.
-"""
+
+
 class BaseGeometry:
     """
-    A class representing the base geometry.
-    """
+    A class defined
 
+    -------
+
+    def area(self): --> methods to return exception
+
+    Raise:
+    Exception with meassage
+    """
+    def __dir__(self):
+        """
+        define the function:
+
+    parameters-->
+    self -> no parameters
+        """
+        attributes = super().__dir__()
+        new_attribute_list = [x for x in attributes if x != "__init_subclass__"]
+        return new_attribute_list
+    
     def area(self):
         """
-        Public instance method that raises an Exception with the message "area() is not implemented".
+        Function to raise exception
         """
         raise Exception("area() is not implemented")
-
+    
     def integer_validator(self, name, value):
         """
-        Public instance method that validates the value.
-
-        Parameters:
-        - name: str
-            The name of the value.
-        - value: int
-            The value to validate.
-
-        Raises:
-        - TypeError: If value is not an integer.
-        - ValueError: If value is less than or equal to 0.
+        Public instance method: def integer_validator(self, name, value): that validates value:
+you can assume name is always a string
+if value is not an integer: raise a TypeError exception, with the message <name> must be an integer
+if value is less or equal to 0: raise a
+ValueError exception with the message <name> must be greater than 0
         """
         if not isinstance(value, int):
-            raise TypeError("{} must be an integer".format(name))
+            raise TypeError('{} must be an integer'.format(name))
+
         if value <= 0:
-            raise ValueError("{} must be greater than 0".format(name))
-
-
+            raise ValueError('{} must be greater than 0'.format(name))
+        
+    
 class Rectangle(BaseGeometry):
     """
-    A class representing a rectangle, inheriting from BaseGeometry.
+    Write a class Rectangle that inherits from BaseGeometry (5-base_geometry.py).
+
     """
-
     def __init__(self, width, height):
-        """
-        Constructor for the Rectangle class.
-
-        Parameters:
-        - width: int
-            The width of the rectangle.
-        - height: int
-            The height of the rectangle.
-        """
-        super().__init__()
-        self.integer_validator("width", width)
-        self.integer_validator("height", height)
-        self.__width = width
-        self.__height = height
-
+        self.__width = self.integer_validator("width", width)
+        self.__height = self.integer_validator("height", height)
+        
     def __str__(self):
-        """
-        String representation of the rectangle.
-
-        Returns:
-        - str
-            The rectangle description in the format [Rectangle] <width>/<height>.
-        """
         return "[Rectangle] {}/{}".format(self.__width, self.__height)
+          
+    @property
+    def width(self):
+        return self.__width
 
+    @property
+    def height(self):
+        return self.__height
+          
     def area(self):
-        """
-        Compute the area of the rectangle.
-
-        Returns:
-        - int
-            The area of the rectangle.
-        """
         return self.__width * self.__height
-
-
-# Example usage:
-if __name__ == "__main__":
-    # Create an instance of the Rectangle class
-    r = Rectangle(3, 5)
-
-    # Test the string representation and area method
-    print(r)
-    print(r.area())

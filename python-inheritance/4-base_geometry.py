@@ -2,24 +2,31 @@
 """   
 Improve Geometry geometry.
 """
+
 class BaseGeometry:
     """
-    A class representing the base geometry.
-    """
+    A class defined
 
+    -------
+
+    def area(self): --> methods to return exception
+
+    Raise:
+    Exception with meassage
+    """
+    def __dir__(self):
+        """
+        define the function:
+
+    parameters-->
+    self -> no parameters
+        """
+        attributes = super().__dir__()
+        new_attribute_list = [x for x in attributes if x != "__init_subclass__"]
+        return new_attribute_list
+    
     def area(self):
         """
-        Public instance method that raises an Exception with the message "area() is not implemented".
+        Function to raise exception
         """
         raise Exception("area() is not implemented")
-
-
-if __name__ == "__main__":
-    # Create an instance of the BaseGeometry class
-    bg = BaseGeometry()
-
-    # Test the area method
-    try:
-        print(bg.area())
-    except Exception as e:
-        print("[{}] {}".format(e.__class__.__name__, e))
