@@ -3,9 +3,8 @@
 Module to export data to JSON
 """
 
-
-import requests
 import json
+import requests
 import sys
 
 def export_to_json():
