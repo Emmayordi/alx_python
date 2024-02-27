@@ -88,27 +88,28 @@ class Rectangle(Base):
         """ Return the string representation of the Rectangle """
         return "[Rectangle] ({}) {}/{} - {}/{}".format(self.id, self.__x, self.__y, self.__width, self.__height)
 
-    def update(self, *args):
-        """ Update the Rectangle attributes with no-keyword arguments """
+    def update(self, *args, **kwargs):
+        """ Update the Rectangle attributes with key-worded arguments """
         attr_list = ['id', 'width', 'height', 'x', 'y']
-        for i in range(len(args)):
-            setattr(self, attr_list[i], args[i])
+        if args:
+            for i in range(len(args)):
+                setattr(self, attr_list[i], args[i])
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
 if __name__ == "__main__":
     r1 = Rectangle(10, 10, 10, 10)
     print(r1)
 
-    r1.update(89)
+    r1.update(height=1)
     print(r1)
 
-    r1.update(89, 2)
+    r1.update(width=1, x=2)
     print(r1)
 
-    r1.update(89, 2, 3)
+    r1.update(y=1, width=2, x=3, id=89)
     print(r1)
 
-    r1.update(89, 2, 3, 4)
-    print(r1)
-
-    r1.update(89, 2, 3, 4, 5)
+    r1.update(x=1, height=2, y=3, width=4)
     print(r1)
