@@ -2,9 +2,10 @@
 """
 Module to export data to JSON
 """
+import json
 import requests
 import sys
-import json
+
 
 def export_to_json(employee_id):
     """
