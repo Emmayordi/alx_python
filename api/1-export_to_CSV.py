@@ -1,3 +1,24 @@
+#!/usr/bin/env python3
+"""
+Using what you did in the task #0, extend your Python script to export data in the CSV format.
+
+"""
+import csv
+import requests
+import sys
+
+def fetch_employee_data(employee_id):
+    """
+    Fetch employee data from the API.
+    """
+    base_url = "https://jsonplaceholder.typicode.com/users"
+    employee_url = f"{base_url}/{employee_id}"
+
+    response_employee = requests.get(employee_url)
+    response_todos = requests.get(f"{employee_url}/todos")
+
+    return response_employee.json(), response_todos.json()
+
 def export_to_csv(employee_id, todos_data):
     """
     Export TODO list data to CSV.
@@ -7,7 +28,7 @@ def export_to_csv(employee_id, todos_data):
         return
 
     user_info = todos_data[0]["userId"]
-    user_name = todos_data[0]["name"]  # Change "username" to "name"
+    name = todos_data[0]["name"]  
     filename = f"{user_info}.csv"
 
     with open(filename, mode="w", newline="") as csvfile:
@@ -25,3 +46,23 @@ def export_to_csv(employee_id, todos_data):
             })
 
     print(f"Exported data to {filename}.")
+
+def main():
+    """
+    Main function to execute the script.
+    """
+    if len(sys.argv) != 2:
+        print("Usage: python3 1-export_to_CSV.py <employee_id>")
+        return
+
+    employee_id = int(sys.argv[1])
+    employee_data, todos_data = fetch_employee_data(employee_id)
+
+    if "id" not in employee_data:
+        print("Employee not found.")
+        return
+
+    export_to_csv(employee_id, todos_data)
+
+if __name__ == "__main__":
+    main()
