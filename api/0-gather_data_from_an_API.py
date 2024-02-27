@@ -43,7 +43,7 @@ def gather_data(employee_id):
     # Displaying output in the specified format
     print(f"Employee {user_data['name']} is done with tasks({len(done_tasks)}/{total_tasks}):")
     for task in done_tasks:
-        print(f"\t{task['title']}")
+        print(f"\t{task['title']} (with 1 tabulation and 1 space before the TASK_TITLE)")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
@@ -52,3 +52,4 @@ if __name__ == "__main__":
 
     employee_id = int(sys.argv[1])
     gather_data(employee_id)
+
