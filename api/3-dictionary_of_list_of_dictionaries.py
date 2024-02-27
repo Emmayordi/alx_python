@@ -2,14 +2,13 @@
 """
 Module to export data to JSON
 """
-import json
+
+
 import requests
+import json
 import sys
 
 def export_to_json():
-    """
-    Function to export all employee TODO lists to a JSON file
-    """
     # API endpoint for fetching user data
     users_url = 'https://jsonplaceholder.typicode.com/users'
 
@@ -18,11 +17,6 @@ def export_to_json():
         users_response = requests.get(users_url)
         users_response.raise_for_status()
         users_data = users_response.json()
-
-        # Check if users_data is non-empty
-        if not users_data:
-            print("No users found.")
-            sys.exit(1)
 
     except requests.exceptions.HTTPError as errh:
         print("HTTP Error:", errh)
