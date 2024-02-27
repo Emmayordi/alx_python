@@ -19,6 +19,11 @@ def export_to_json():
         users_response.raise_for_status()
         users_data = users_response.json()
 
+        # Check if users_data is non-empty
+        if not users_data:
+            print("No users found.")
+            sys.exit(1)
+
     except requests.exceptions.HTTPError as errh:
         print("HTTP Error:", errh)
         sys.exit(1)
@@ -79,6 +84,8 @@ def export_to_json():
         json.dump(all_employees_tasks, json_file)
 
     print(f"Data exported to {json_file_name}")
+
+    print("All users found: OK")
 
 if __name__ == "__main__":
     export_to_json()
