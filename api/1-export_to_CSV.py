@@ -1,68 +1,57 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Using what you did in the task #0, extend your Python script to export data in the CSV format.
-
+Module to export data to CSV
 """
-import csv
 import requests
 import sys
+import csv
 
-def fetch_employee_data(employee_id):
+def gather_data(employee_id):
     """
-    Fetch employee data from the API.
+    Function to gather and display employee TODO list progress
     """
-    base_url = "https://jsonplaceholder.typicode.com/users"
-    employee_url = f"{base_url}/{employee_id}"
+    # API endpoints
+    user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+    todo_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
 
-    response_employee = requests.get(employee_url)
-    response_todos = requests.get(f"{employee_url}/todos")
+    # Fetching data from API
+    user_response = requests.get(user_url)
+    todo_response = requests.get(todo_url)
 
-    return response_employee.json(), response_todos.json()
-
-def export_to_csv(employee_id, todos_data):
-    """
-    Export TODO list data to CSV.
-    """
-    if not todos_data:
-        print(f"No TODO data found for employee {employee_id}.")
+    # Checking if requests were successful
+    if user_response.status_code != 200:
+        print("Error: Unable to fetch user data")
         return
 
-    user_info = todos_data[0]["userId"]
-    name = todos_data[0]["name"]  
-    filename = f"{user_info}.csv"
+    if todo_response.status_code != 200:
+        print("Error: Unable to fetch TODO data")
+        return
 
-    with open(filename, mode="w", newline="") as csvfile:
+    # Extracting relevant information
+    user_data = user_response.json()
+    todo_data = todo_response.json()
+
+    # Exporting to CSV
+    csv_file_name = f"{employee_id}.csv"
+    with open(csv_file_name, mode='w', newline='') as csv_file:
         fieldnames = ["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
         writer.writeheader()
-
-        for todo in todos_data:
+        for task in todo_data:
             writer.writerow({
-                "USER_ID": user_info,
-                "USERNAME": user_name,
-                "TASK_COMPLETED_STATUS": str(todo["completed"]),
-                "TASK_TITLE": todo["title"]
+                "USER_ID": user_data["id"],
+                "USERNAME": user_data["username"],
+                "TASK_COMPLETED_STATUS": str(task["completed"]),
+                "TASK_TITLE": task["title"]
             })
 
-    print(f"Exported data to {filename}.")
-
-def main():
-    """
-    Main function to execute the script.
-    """
-    if len(sys.argv) != 2:
-        print("Usage: python3 1-export_to_CSV.py <employee_id>")
-        return
-
-    employee_id = int(sys.argv[1])
-    employee_data, todos_data = fetch_employee_data(employee_id)
-
-    if "id" not in employee_data:
-        print("Employee not found.")
-        return
-
-    export_to_csv(employee_id, todos_data)
+    print(f"Data exported to {csv_file_name}")
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
+        print("Usage: python3 1-export_to_CSV.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = int(sys.argv[1])
+    gather_data(employee_id)
