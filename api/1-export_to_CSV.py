@@ -61,5 +61,4 @@ if __name__ == "__main__":
         print("Usage: python3 1-export_to_CSV.py <employee_id>")
         sys.exit(1)
 
-    employee_id = int(sys.argv[1])
-    export_to_csv(employee_id)
+    
