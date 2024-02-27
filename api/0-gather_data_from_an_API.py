@@ -1,52 +1,54 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Script to gather data from a REST API for a given employee ID.
+Module to gather data from an API
 """
-
 import requests
-from sys import argv
+import sys
 
-def fetch_employee_data(employee_id):
+def gather_data(employee_id):
     """
-    Fetch employee data from the API.
+    Function to gather and display employee TODO list progress
     """
-    base_url = "https://jsonplaceholder.typicode.com/users"
-    employee_url = f"{base_url}/{employee_id}"
+    # API endpoints
+    user_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}'
+    todo_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
 
-    response_employee = requests.get(employee_url)
-    response_todos = requests.get(f"{employee_url}/todos")
+    # Fetching data from API
+    try:
+        user_response = requests.get(user_url)
+        user_response.raise_for_status()
+        user_data = user_response.json()
 
-    return response_employee.json(), response_todos.json()
+        todo_response = requests.get(todo_url)
+        todo_response.raise_for_status()
+        todo_data = todo_response.json()
 
-def display_todo_progress(employee_name, completed_tasks, total_tasks, completed_titles):
-    """
-    Display TODO list progress in the specified format.
-    """
-    print(f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):")
-    for title in completed_titles:
-        print(f"\t{title}")
+    except requests.exceptions.HTTPError as errh:
+        print ("HTTP Error:", errh)
+        sys.exit(1)
+    except requests.exceptions.ConnectionError as errc:
+        print ("Error Connecting:", errc)
+        sys.exit(1)
+    except requests.exceptions.Timeout as errt:
+        print ("Timeout Error:", errt)
+        sys.exit(1)
+    except requests.exceptions.RequestException as err:
+        print ("Oops! Something went wrong:", err)
+        sys.exit(1)
 
-def main():
-    """
-    Main function to execute the script.
-    """
-    if len(argv) != 2:
-        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
-        return
+    # Processing TODO list
+    total_tasks = len(todo_data)
+    done_tasks = [task for task in todo_data if task['completed']]
 
-    employee_id = int(argv[1])
-    employee_data, todos_data = fetch_employee_data(employee_id)
-
-    if "id" not in employee_data:
-        print("Employee not found.")
-        return
-
-    employee_name = employee_data["name"]
-    completed_tasks = sum(todo["completed"] for todo in todos_data)
-    total_tasks = len(todos_data)
-    completed_titles = [todo["title"] for todo in todos_data if todo["completed"]]
-
-    display_todo_progress(employee_name, completed_tasks, total_tasks, completed_titles)
+    # Displaying output in the specified format
+    print(f"Employee {user_data['name']} is done with tasks({len(done_tasks)}/{total_tasks}):")
+    for task in done_tasks:
+        print(f"\t{task['title']}")
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
+        print("Usage: python3 0-gather_data_from_an_API.py <employee_id>")
+        sys.exit(1)
+
+    employee_id = int(sys.argv[1])
+    gather_data(employee_id)
